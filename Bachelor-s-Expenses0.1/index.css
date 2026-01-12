@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom globals if any */
+body {
+    background-color: #f9fafb;
+    transition: background-color 0.3s ease;
+}
+.dark body {
+    background-color: #111827;
+}
