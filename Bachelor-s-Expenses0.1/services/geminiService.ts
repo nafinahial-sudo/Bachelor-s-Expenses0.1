@@ -3,11 +3,10 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { MonthData, UserProfile, Expense, LifeMode, LifeEvent } from "../types";
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-if (!apiKey) {
-  console.error("Gemini API Key is missing! Please set VITE_GEMINI_API_KEY in your .env file.");
-}
 
-const ai = new GoogleGenAI({ apiKey });
+// Initialize AI client only if key exists, but don't crash yet.
+// If null, service methods will throw actionable errors.
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const analyzeFinances = async (
   profile: UserProfile,
@@ -32,6 +31,9 @@ export const analyzeFinances = async (
     7. Supportive advice.
   `;
 
+  if (!ai) {
+    throw new Error("Gemini API Key is missing. Please set VITE_GEMINI_API_KEY in your environment variables or Vercel settings.");
+  }
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: prompt,
@@ -82,6 +84,9 @@ export const analyzeSavingsGoal = async (
     - Use a supportive, non-shaming Banglish tone.
   `;
 
+  if (!ai) {
+    throw new Error("Gemini API Key is missing. Please set VITE_GEMINI_API_KEY in your environment variables or Vercel settings.");
+  }
   const response = await ai.models.generateContent({
     model: 'gemini-3-pro-preview',
     contents: prompt,
@@ -117,6 +122,9 @@ export const getGiftSuggestions = async (budget: number, occasion: string, recip
     Life Mode: ${profile.lifeMode}.
   `;
 
+  if (!ai) {
+    throw new Error("Gemini API Key is missing. Please set VITE_GEMINI_API_KEY in your environment variables or Vercel settings.");
+  }
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: prompt,
