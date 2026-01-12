@@ -10,6 +10,12 @@ View your app in AI Studio: https://ai.studio/apps/temp/1
 
 ## Run Locally
 
+## Tech Stack
+- React 19
+- Vite
+- Tailwind CSS v4 (PostCSS)
+- Google Gemini AI
+
 **Prerequisites:**  Node.js
 
 
